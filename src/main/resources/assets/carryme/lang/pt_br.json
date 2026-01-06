@@ -1,0 +1,7 @@
+{
+  "carryme.message.carry_enabled": "Você agora pode ser carregado!",
+  "carryme.message.carry_disabled": "Você não pode mais ser carregado!",
+  "carryme.message.cant_change_carry_mode": "Você não pode mudar seu modo de ser carregado.",
+  "key.categories.carryme": "Carry Me",
+  "key.carryme.toggle": "Alternar Modo de Ser Carregado"
+}

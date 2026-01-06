@@ -1,7 +1,7 @@
 {
   "carryme.message.carry_enabled": "You can now be carried!",
   "carryme.message.carry_disabled": "You can no longer be carried!",
-  "carryme.message.cant_change_carry_mode": "You cannot change your carry mode.",
+  "carryme.message.cant_change_carry_mode": "You cannot change your carried mode.",
   "key.categories.carryme": "Carry Me",
-  "key.carryme.toggle": "Toggle Carry Mode"
+  "key.carryme.toggle": "Toggle Carried Mode"
 }
