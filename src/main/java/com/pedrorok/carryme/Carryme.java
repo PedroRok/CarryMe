@@ -12,6 +12,8 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import tschipp.carryon.common.carry.CarryOnDataManager;
 
+import javax.swing.table.TableRowSorter;
+
 /**
  * @author Rok, Pedro Lucas nmm. 05/01/2026
  * @project carry-me
@@ -40,7 +42,7 @@ public class Carryme {
         }
 
         CompoundTag persistentData = player.getPersistentData();
-        boolean current = persistentData.getBoolean(WANNA_BE_CARRIED_KEY);
+        boolean current = !persistentData.contains(WANNA_BE_CARRIED_KEY) || persistentData.getBoolean(WANNA_BE_CARRIED_KEY);
         persistentData.putBoolean(WANNA_BE_CARRIED_KEY, wantsToBeCarried);
         sendStatusMessage(player, wantsToBeCarried, current);
     }
