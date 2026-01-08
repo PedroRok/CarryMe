@@ -44,7 +44,7 @@ public class FabricPlatformImpl implements CarryMePlatform {
 
     @Override
     public void setWantsToBeCarried(Player player, boolean wantsToBeCarried, boolean isSelfChange) {
-        if (!CarryMeLogic.canChangeCarryPreference(player, ALLOW_CARRY_CHOICE, isSelfChange)) {
+        if (!CarryMeLogic.canChangeCarryPreference(player,isSelfChange, player.level().getServer().getGameRules().getBoolean(ALLOW_CARRY_CHOICE))) {
             return;
         }
 
