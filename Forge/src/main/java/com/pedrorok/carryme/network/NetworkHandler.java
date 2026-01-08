@@ -1,8 +1,8 @@
 package com.pedrorok.carryme.network;
 
 import com.pedrorok.carryme.network.packets.ToggleCarryModePacket;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraft.resources.Identifier;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.network.ChannelBuilder;
@@ -27,7 +27,7 @@ public class NetworkHandler {
     public static void onCommonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             INSTANCE = ChannelBuilder
-                    .named(ResourceLocation.fromNamespaceAndPath(MOD_ID, "main"))
+                    .named(Identifier.fromNamespaceAndPath(MOD_ID, "main"))
                     .networkProtocolVersion(PROTOCOL_VERSION)
                     .simpleChannel();
 

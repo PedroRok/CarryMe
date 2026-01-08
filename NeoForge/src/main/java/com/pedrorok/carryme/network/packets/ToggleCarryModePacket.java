@@ -4,7 +4,7 @@ import com.pedrorok.carryme.platform.CarryMePlatform;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +17,7 @@ import static com.pedrorok.carryme.CarryMeLogic.MOD_ID;
  */
 public record ToggleCarryModePacket() implements CustomPacketPayload {
 
-    public static final Type<ToggleCarryModePacket> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(MOD_ID, "toggle_carry_mode"));
+    public static final Type<ToggleCarryModePacket> TYPE = new Type<>(Identifier.fromNamespaceAndPath(MOD_ID, "toggle_carry_mode"));
 
     public static final StreamCodec<ByteBuf, ToggleCarryModePacket> STREAM_CODEC = StreamCodec.unit(new ToggleCarryModePacket());
 

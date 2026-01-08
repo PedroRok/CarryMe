@@ -1,7 +1,7 @@
 package com.pedrorok.carryme.platform;
 
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.gamerules.GameRule;
 
 /**
  * Platform-specific abstraction for Carry Me mod
@@ -29,7 +29,7 @@ public interface CarryMePlatform {
     /**
      * Get the game rule for allowing carry choice
      */
-    GameRules.Key<GameRules.BooleanValue> getAllowCarryChoiceRule();
+    GameRule<Boolean> getAllowCarryChoiceRule();
 
     /**
      * Set whether a player wants to be carried

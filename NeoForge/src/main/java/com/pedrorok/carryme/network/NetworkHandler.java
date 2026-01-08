@@ -14,7 +14,7 @@ import static com.pedrorok.carryme.CarryMeLogic.MOD_ID;
  * @author Rok, Pedro Lucas nmm. 06/01/2026
  * @project carry-me
  */
-@EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = MOD_ID)
 public class NetworkHandler {
 
     @SubscribeEvent

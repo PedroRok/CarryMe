@@ -2,7 +2,7 @@ package com.pedrorok.carryme.events;
 
 import com.pedrorok.carryme.platform.CarryMePlatform;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import tschipp.carryon.events.EntityPickupEvent;
 
@@ -17,9 +17,9 @@ public class CarryOnEvents {
 
     @SubscribeEvent
     public static void onCarryEntity(EntityPickupEvent event) {
-        if (!(event.target instanceof Player player)) return;
+        if (!(event.target() instanceof Player player)) return;
         if (CarryMePlatform.getInstance().wantsToBeCarried(player)) return;
-        event.setCanceled(true);
+        event
     }
 }
 

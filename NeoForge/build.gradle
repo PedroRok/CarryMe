@@ -72,6 +72,7 @@ neoForge {
 }
 
 dependencies {
+    compileOnly project(path: ':Common', configuration: 'namedElements')
     // Carry On dependency
     implementation "tschipp.carryon:carryon-neoforge-${minecraft_version}:${carry_on_version}"
 }
