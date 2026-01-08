@@ -35,7 +35,7 @@ public class CarryMeLogic {
      */
     public static boolean canChangeCarryPreference(Player player, boolean isSelfChange, boolean canChoose) {
         if (!canChoose && isSelfChange && !player.hasPermissions(2)) {
-            player.sendSystemMessage(Component.translatable("carryme.message.cant_change_carry_mode").withColor(0xfc5454));
+            player.displayClientMessage(Component.translatable("carryme.message.cant_change_carry_mode").withColor(0xfc5454), false);
             player.playNotifySound(SoundEvents.VILLAGER_NO, SoundSource.PLAYERS, 0.5f, 1.5f);
             return false;
         }

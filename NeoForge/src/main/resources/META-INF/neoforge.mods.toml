@@ -64,7 +64,7 @@ side = "BOTH"
 [[dependencies."${mod_id}"]]
 modId="carryon"
 type="required"
-versionRange="[2.1.2.27,)"
+versionRange="[${carry_on_version},)"
 ordering="NONE"
 side="BOTH"
 

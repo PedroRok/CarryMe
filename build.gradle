@@ -23,6 +23,16 @@ subprojects {
                 includeGroup "curse.maven"
             }
         }
+
+        // mod menu
+        maven {
+            name = "Terraformers"
+            url = "https://maven.terraformersmc.com/"
+        }
+
+        // cloth config
+        maven { url "https://maven.shedaniel.me/" }
+        maven { url "https://maven.terraformersmc.com/releases/" }
     }
 
     tasks.withType(JavaCompile).configureEach {
