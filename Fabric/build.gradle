@@ -4,7 +4,7 @@ plugins {
 }
 
 base {
-    archivesName = "${mod_id}-fabric"
+    archivesName = "${mod_id}-fabric-${minecraft_version}"
 }
 
 loom {
@@ -94,3 +94,16 @@ processResources {
     }
 }
 
+// Configure JAR tasks to output directly to exports folder
+tasks.withType(Jar).configureEach {
+    destinationDirectory = rootProject.file('exports')
+}
+
+// Configure Loom remapping tasks to output directly to exports folder
+tasks.named('remapJar') {
+    destinationDirectory = rootProject.file('exports')
+}
+
+tasks.named('remapSourcesJar') {
+    destinationDirectory = rootProject.file('exports')
+}

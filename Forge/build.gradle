@@ -155,3 +155,7 @@ tasks.named('jar', Jar).configure {
     }
 }
 
+// Configure all JAR tasks to output directly to exports folder
+tasks.withType(Jar).configureEach {
+    destinationDirectory = rootProject.file('exports')
+}
