@@ -1,7 +1,7 @@
 package com.pedrorok.carryme;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
+import net.minecraft.server.MinecraftServer;import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameRules;
@@ -33,9 +33,7 @@ public class CarryMeLogic {
     /**
      * Checks if a player can change their carry preference based on game rules
      */
-    public static boolean canChangeCarryPreference(Player player, GameRules.Key<GameRules.BooleanValue> allowCarryChoiceRule, boolean isSelfChange) {
-        boolean canChoose = player.level().getGameRules().getBoolean(allowCarryChoiceRule);
-
+    public static boolean canChangeCarryPreference(Player player, boolean isSelfChange, boolean canChoose) {
         if (!canChoose && isSelfChange && !player.hasPermissions(2)) {
             player.sendSystemMessage(Component.translatable("carryme.message.cant_change_carry_mode").withColor(0xfc5454));
             player.playNotifySound(SoundEvents.VILLAGER_NO, SoundSource.PLAYERS, 0.5f, 1.5f);
@@ -44,5 +42,7 @@ public class CarryMeLogic {
 
         return true;
     }
+
+
 }
 

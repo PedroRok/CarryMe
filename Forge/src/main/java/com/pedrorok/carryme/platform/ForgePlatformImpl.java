@@ -5,23 +5,24 @@ import com.pedrorok.carryme.commands.CarryMeCommand;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameRules;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import com.pedrorok.carryme.platform.CarryMePlatform;
 
 /**
- * NeoForge-specific platform implementation
+ * Forge-specific platform implementation
  *
  * @author Rok, Pedro Lucas nmm. 06/01/2026
  * @project carry-me
  */
-@EventBusSubscriber(modid = CarryMeLogic.MOD_ID)
-public class NeoForgePlatformImpl implements CarryMePlatform {
+@Mod.EventBusSubscriber(modid = CarryMeLogic.MOD_ID)
+public class ForgePlatformImpl implements CarryMePlatform {
 
     private static final String WANNA_BE_CARRIED_KEY = CarryMeLogic.MOD_ID + ":wantsToBeCarried";
 
     public static final GameRules.Key<GameRules.BooleanValue> ALLOW_CARRY_CHOICE =
-            GameRules.register("allowCarryChoice", GameRules.Category.PLAYER, GameRules.BooleanValue.create(true));
+            GameRules.register("allowCarryChoice", GameRules.Category.PLAYER, GameRules.BooleanValue.create(true, ((minecraftServer, booleanValue) -> {})));
 
     @Override
     public GameRules.Key<GameRules.BooleanValue> getAllowCarryChoiceRule() {

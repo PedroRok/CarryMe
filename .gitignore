@@ -40,5 +40,6 @@ bin/
 
 ### Minecraft ###
 run/
+runs/
 /run-data/
 /src/generated/resources/.cache/
