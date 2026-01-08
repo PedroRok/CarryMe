@@ -33,3 +33,10 @@ tasks.named('remapSourcesJar') {
     enabled = false
 }
 
+tasks.named('jar', Jar).configure {
+    manifest {
+        attributes([
+            'Automatic-Module-Name': "${mod_id}.common"
+        ])
+    }
+}
