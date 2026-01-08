@@ -23,7 +23,6 @@ minecraft {
 
     runs {
         client {
-            workingDirectory file('runs/client')
             ideaModule "${rootProject.name}.${project.name}.main"
             taskName 'Client'
             mods {
@@ -34,7 +33,6 @@ minecraft {
         }
 
         server {
-            workingDirectory file('runs/server')
             ideaModule "${rootProject.name}.${project.name}.main"
             taskName 'Server'
             mods {
@@ -45,7 +43,6 @@ minecraft {
         }
 
         data {
-            workingDirectory file('runs/data')
             ideaModule "${rootProject.name}.${project.name}.main"
             args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
             taskName 'Data'
@@ -63,10 +60,11 @@ sourceSets.main.resources.srcDir 'src/generated/resources'
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    implementation project(path: ':Common', configuration: 'namedElements')
+    compileOnly project(path: ':Common', configuration: 'namedElements')
 
 
     implementation fg.deobf("tschipp.carryon:carryon-forge-${minecraft_version}:${carry_on_version}")
+    implementation 'io.github.llamalad7:mixinextras-forge:0.4.1'
     // Forge's hack fix
     implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
 }
@@ -120,6 +118,14 @@ tasks.named('sourcesJar', Jar) {
     from(configurations.commonResources)
 }
 
+tasks.withType(ProcessResources).configureEach {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.withType(Jar).configureEach {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
 tasks.named('processResources', ProcessResources).configure {
     var replaceProperties = [
             minecraft_version         : minecraft_version,
@@ -140,3 +146,12 @@ tasks.named('processResources', ProcessResources).configure {
         expand replaceProperties
     }
 }
+
+tasks.named('jar', Jar).configure {
+    manifest {
+        attributes([
+            'Automatic-Module-Name': "${mod_id}.forge"
+        ])
+    }
+}
+
