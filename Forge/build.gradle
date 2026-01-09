@@ -1,8 +1,6 @@
 plugins {
+    id 'loader'
     id 'net.minecraftforge.gradle' version '[6.0.46,6.2)'
-}
-base {
-    archivesName = "${mod_id}-forge-${minecraft_version}"
 }
 
 minecraft {
@@ -60,8 +58,6 @@ sourceSets.main.resources.srcDir 'src/generated/resources'
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    compileOnly project(path: ':Common', configuration: 'namedElements')
-
 
     implementation fg.deobf("tschipp.carryon:carryon-forge-${minecraft_version}:${carry_on_version}")
     implementation 'io.github.llamalad7:mixinextras-forge:0.4.1'
@@ -73,90 +69,4 @@ sourceSets.each {
     def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
     it.output.resourcesDir = dir
     it.java.destinationDirectory = dir
-}
-
-sourceSets {
-    main {
-        java {
-            srcDir project(':Common').file('src/main/java')
-        }
-        resources {
-            srcDir project(':Common').file('src/main/resources')
-        }
-    }
-}
-
-
-configurations {
-    commonJava {
-        canBeResolved = true
-    }
-    commonResources {
-        canBeResolved = true
-    }
-}
-
-tasks.named('compileJava', JavaCompile) {
-    dependsOn(configurations.commonJava)
-    source(configurations.commonJava)
-}
-
-processResources {
-    dependsOn(configurations.commonResources)
-    from(configurations.commonResources)
-}
-
-tasks.named('javadoc', Javadoc).configure {
-    dependsOn(configurations.commonJava)
-    source(configurations.commonJava)
-}
-
-tasks.named('sourcesJar', Jar) {
-    dependsOn(configurations.commonJava)
-    from(configurations.commonJava)
-    dependsOn(configurations.commonResources)
-    from(configurations.commonResources)
-}
-
-tasks.withType(ProcessResources).configureEach {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
-
-tasks.withType(Jar).configureEach {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
-
-tasks.named('processResources', ProcessResources).configure {
-    var replaceProperties = [
-            minecraft_version         : minecraft_version,
-            minecraft_version_range   : minecraft_version_range,
-            forge_version             : forge_version,
-            forge_version_range       : forge_version_range,
-            forge_loader_version_range: forge_loader_version_range,
-            mod_id                    : mod_id,
-            mod_name                  : mod_name,
-            mod_license               : mod_license,
-            mod_version               : mod_version,
-            mod_authors               : mod_authors,
-            mod_description           : mod_description,
-            carry_on_version          : carry_on_version
-    ]
-    inputs.properties replaceProperties
-
-    filesMatching(['META-INF/mods.toml']) {
-        expand replaceProperties
-    }
-}
-
-tasks.named('jar', Jar).configure {
-    manifest {
-        attributes([
-            'Automatic-Module-Name': "${mod_id}.forge"
-        ])
-    }
-}
-
-// Configure all JAR tasks to output directly to exports folder
-tasks.withType(Jar).configureEach {
-    destinationDirectory = rootProject.file('exports')
 }

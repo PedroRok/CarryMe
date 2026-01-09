@@ -1,8 +1,10 @@
 package com.pedrorok.carryme.platform;
 
 import com.pedrorok.carryme.CarryMeLogic;
+import com.pedrorok.carryme.accessor.ICarryPlayer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleBuilder;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.gamerules.GameRule;
@@ -21,20 +23,9 @@ import java.util.UUID;
  */
 public class FabricPlatformImpl implements CarryMePlatform {
 
-    private static final Map<UUID, Boolean> carryPreferences = new HashMap<>();
-
     public static final GameRule<Boolean> ALLOW_CARRY_CHOICE = GameRuleBuilder.forBoolean(true)
             .category(GameRuleCategory.PLAYER)
             .buildAndRegister(Identifier.fromNamespaceAndPath(CarryMeLogic.MOD_ID, "allow_carry_choice"));
-
-    public FabricPlatformImpl() {
-        ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> {
-            UUID playerId = newPlayer.getUUID();
-            if (carryPreferences.containsKey(oldPlayer.getUUID())) {
-                carryPreferences.put(playerId, carryPreferences.get(oldPlayer.getUUID()));
-            }
-        });
-    }
 
     @Override
     public GameRule<Boolean> getAllowCarryChoiceRule() {
@@ -42,28 +33,15 @@ public class FabricPlatformImpl implements CarryMePlatform {
     }
 
     @Override
-    public void setWantsToBeCarried(Player player, boolean wantsToBeCarried, boolean isSelfChange) {
-        if (!CarryMeLogic.canChangeCarryPreference(player, isSelfChange, player.level().getServer().getWorldData().getGameRules().get(ALLOW_CARRY_CHOICE))) {
-            return;
-        }
-
-        UUID playerId = player.getUUID();
-        boolean current = carryPreferences.getOrDefault(playerId, true);
-
-        carryPreferences.put(playerId, wantsToBeCarried);
-
-        CarryMeLogic.sendStatusMessage(player, wantsToBeCarried, current);
+    public void setCarryStatus(Player player, boolean canBeCarried) {
+        if (!(player instanceof ICarryPlayer carryPlayer)) return;
+        carryPlayer.carry_me$setCanBeCarried(canBeCarried);
     }
 
     @Override
     public boolean wantsToBeCarried(Player player) {
-        UUID playerId = player.getUUID();
-        return carryPreferences.getOrDefault(playerId, true);
-    }
-
-    @Override
-    public void loadPreferenceFromNBT(UUID playerId, boolean wantsToBeCarried) {
-        carryPreferences.put(playerId, wantsToBeCarried);
+        if (!(player instanceof ICarryPlayer carryPlayer)) return true;
+        return carryPlayer.carry_me$canBeCarried();
     }
 }
 

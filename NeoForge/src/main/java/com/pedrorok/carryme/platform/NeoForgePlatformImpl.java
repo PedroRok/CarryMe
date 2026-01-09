@@ -1,13 +1,11 @@
 package com.pedrorok.carryme.platform;
 
 import com.pedrorok.carryme.CarryMeLogic;
-import com.pedrorok.carryme.CarrymeNeoForge;
+import com.pedrorok.carryme.ModRegistry;
 import com.pedrorok.carryme.commands.CarryMeCommand;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.gamerules.GameRule;
-import net.minecraft.world.level.gamerules.GameRuleCategory;
-import net.minecraft.world.level.gamerules.GameRules;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
@@ -23,34 +21,21 @@ public class NeoForgePlatformImpl implements CarryMePlatform {
 
     private static final String WANNA_BE_CARRIED_KEY = CarryMeLogic.MOD_ID + ":wantsToBeCarried";
 
-
-    public static final GameRule<Boolean> ALLOW_CARRY_CHOICE = GameRules.registerBoolean(
-            "allow_carry_choice",
-            GameRuleCategory.PLAYER,
-            true
-    );
-
     @Override
     public GameRule<Boolean> getAllowCarryChoiceRule() {
-        return ALLOW_CARRY_CHOICE;
-    }
-
-    @Override
-    public void setWantsToBeCarried(Player player, boolean wantsToBeCarried, boolean isSelfChange) {
-        if (!CarryMeLogic.canChangeCarryPreference(player, isSelfChange, player.level().getServer().getWorldData().getGameRules().get(getAllowCarryChoiceRule()))) {
-            return;
-        }
-
-        CompoundTag persistentData = player.getPersistentData();
-        boolean current = !persistentData.contains(WANNA_BE_CARRIED_KEY) || persistentData.getBoolean(WANNA_BE_CARRIED_KEY).get();
-        persistentData.putBoolean(WANNA_BE_CARRIED_KEY, wantsToBeCarried);
-        CarryMeLogic.sendStatusMessage(player, wantsToBeCarried, current);
+        return ModRegistry.ALLOW_CARRY_CHOICE.get();
     }
 
     @Override
     public boolean wantsToBeCarried(Player player) {
         CompoundTag persistentData = player.getPersistentData();
         return !persistentData.contains(WANNA_BE_CARRIED_KEY) || persistentData.getBoolean(WANNA_BE_CARRIED_KEY).get();
+    }
+
+    @Override
+    public void setCarryStatus(Player player, boolean canBeCarried) {
+        CompoundTag persistentData = player.getPersistentData();
+        persistentData.putBoolean(WANNA_BE_CARRIED_KEY, canBeCarried);
     }
 
     @SubscribeEvent

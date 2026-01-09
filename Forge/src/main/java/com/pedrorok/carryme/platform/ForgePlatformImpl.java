@@ -31,21 +31,15 @@ public class ForgePlatformImpl implements CarryMePlatform {
     }
 
     @Override
-    public void setWantsToBeCarried(Player player, boolean wantsToBeCarried, boolean isSelfChange) {
-        if (!CarryMeLogic.canChangeCarryPreference(player, isSelfChange, player.level().getServer().getWorldData().getGameRules().get(ALLOW_CARRY_CHOICE))) {
-            return;
-        }
-
-        CompoundTag persistentData = player.getPersistentData();
-        boolean current = !persistentData.contains(WANNA_BE_CARRIED_KEY) || persistentData.getBoolean(WANNA_BE_CARRIED_KEY).get();
-        persistentData.putBoolean(WANNA_BE_CARRIED_KEY, wantsToBeCarried);
-        CarryMeLogic.sendStatusMessage(player, wantsToBeCarried, current);
-    }
-
-    @Override
     public boolean wantsToBeCarried(Player player) {
         CompoundTag persistentData = player.getPersistentData();
         return !persistentData.contains(WANNA_BE_CARRIED_KEY) || persistentData.getBoolean(WANNA_BE_CARRIED_KEY).get();
+    }
+
+    @Override
+    public void setCarryStatus(Player player, boolean canBeCarried) {
+        CompoundTag persistentData = player.getPersistentData();
+        persistentData.putBoolean(WANNA_BE_CARRIED_KEY, canBeCarried);
     }
 
     @SubscribeEvent

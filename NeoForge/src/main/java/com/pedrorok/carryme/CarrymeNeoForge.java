@@ -22,7 +22,9 @@ public class CarrymeNeoForge {
 
     public CarrymeNeoForge(IEventBus modEventBus, ModContainer modContainer) {
         // Initialize platform-specific implementation
+        ModRegistry.init(modEventBus);
         CarryMePlatform.setInstance(new NeoForgePlatformImpl());
+
     }
 }
 

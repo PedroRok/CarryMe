@@ -1,11 +1,13 @@
 package com.pedrorok.carryme.mixin;
 
+import com.pedrorok.carryme.accessor.ICarryPlayer;
 import com.pedrorok.carryme.platform.CarryMePlatform;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -15,21 +17,29 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * @project carry-me
  */
 @Mixin(ServerPlayer.class)
-public class ServerPlayerMixin {
+public class ServerPlayerMixin implements ICarryPlayer {
+
+    @Unique
+    private boolean carry_me$canBeCarried = false;
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
     private void onReadAdditionalSaveData(ValueInput valueInput, CallbackInfo ci) {
-        ServerPlayer player = (ServerPlayer) (Object) this;
-        CarryMePlatform.getInstance().loadPreferenceFromNBT(player.getUUID(), valueInput.getBooleanOr("wantsToBeCarried", true));
+        this.carry_me$canBeCarried = valueInput.getBooleanOr("wantsToBeCarried", true);
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
     private void onAddAdditionalSaveData(ValueOutput valueOutput, CallbackInfo ci) {
-        ServerPlayer player = (ServerPlayer) (Object) this;
+        valueOutput.putBoolean("wantsToBeCarried", carry_me$canBeCarried);
+    }
 
-        boolean wantsToBeCarried = CarryMePlatform.getInstance().wantsToBeCarried(player);
+    @Override
+    public boolean carry_me$canBeCarried() {
+        return this.carry_me$canBeCarried;
+    }
 
-        valueOutput.putBoolean("wantsToBeCarried", wantsToBeCarried);
+    @Override
+    public void carry_me$setCanBeCarried(boolean canBeCarried) {
+        this.carry_me$canBeCarried = canBeCarried;
     }
 }
 

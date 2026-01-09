@@ -1,6 +1,7 @@
 package com.pedrorok.carryme;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.permissions.Permissions;
 import net.minecraft.sounds.SoundEvents;import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
@@ -12,6 +13,10 @@ import net.minecraft.world.entity.player.Player;
 public class CarryMeLogic {
 
     public static final String MOD_ID = "carryme";
+
+    public static Identifier of(String path) {
+        return Identifier.fromNamespaceAndPath(MOD_ID, path);
+    }
 
     public static void sendStatusMessage(Player player, boolean enabled, boolean current) {
         if (enabled == current) return;

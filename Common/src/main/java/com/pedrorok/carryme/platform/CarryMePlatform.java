@@ -1,5 +1,6 @@
 package com.pedrorok.carryme.platform;
 
+import com.pedrorok.carryme.CarryMeLogic;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.gamerules.GameRule;
 
@@ -19,13 +20,19 @@ public interface CarryMePlatform {
 
     GameRule<Boolean> getAllowCarryChoiceRule();
 
-    void setWantsToBeCarried(Player player, boolean wantsToBeCarried, boolean isSelfChange);
+    default void setWantsToBeCarried(Player player, boolean wantsToBeCarried, boolean isSelfChange) {
+        if (!CarryMeLogic.canChangeCarryPreference(player, isSelfChange, player.level().getServer().getWorldData().getGameRules().get(getAllowCarryChoiceRule()))) {
+            return;
+        }
+
+        var current = wantsToBeCarried(player);
+        setCarryStatus(player, wantsToBeCarried);
+
+        CarryMeLogic.sendStatusMessage(player, wantsToBeCarried, current);
+    }
 
     boolean wantsToBeCarried(Player player);
 
-
-    default void loadPreferenceFromNBT(java.util.UUID playerId, boolean wantsToBeCarried) {
-
-    }
+    void setCarryStatus(Player player, boolean canBeCarried);
 }
 
