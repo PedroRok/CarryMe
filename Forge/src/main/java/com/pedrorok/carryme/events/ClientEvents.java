@@ -15,7 +15,7 @@ import static com.pedrorok.carryme.CarryMeLogic.MOD_ID;
  * @author Rok, Pedro Lucas nmm. 06/01/2026
  * @project carry-me
  */
-@Mod.EventBusSubscriber(modid = MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ClientEvents {
 
     @SubscribeEvent
@@ -23,13 +23,10 @@ public class ClientEvents {
         event.register(KeyBindings.TOGGLE_CARRY_MODE);
     }
 
-    @Mod.EventBusSubscriber(modid = MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
-    public static class GameEvents {
-        @SubscribeEvent
-        public static void onClientTick(TickEvent.LevelTickEvent.Post event) {
-            while (KeyBindings.TOGGLE_CARRY_MODE.consumeClick()) {
-                NetworkHandler.sendToServer(new ToggleCarryModePacket());
-            }
+    @SubscribeEvent
+    public static void onClientTick(TickEvent.LevelTickEvent.Post event) {
+        while (KeyBindings.TOGGLE_CARRY_MODE.consumeClick()) {
+            NetworkHandler.sendToServer(new ToggleCarryModePacket());
         }
     }
 }

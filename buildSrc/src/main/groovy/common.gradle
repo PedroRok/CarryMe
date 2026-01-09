@@ -117,11 +117,12 @@ processResources {
                        'mod_description'              : project.mod_description,
                        'neoforge_version'             : neoforge_version,
                        'neoforge_loader_version_range': neoforge_loader_version_range,
-                       "forge_version"                : forge_version,
-                       "forge_loader_version_range"   : forge_loader_version_range,
-                       "loader_version_range"         : loader_version_range,
+                       'forge_version'                : forge_version,
+                       'forge_version_range'          : forge_version_range,
+                       'forge_loader_version_range'   : forge_loader_version_range,
+                       'loader_version_range'         : loader_version_range,
                        'java_version'                 : java_version,
-                       carry_on_version               : carry_on_version
+                       'carry_on_version'             : carry_on_version
     ]
 
     filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml', 'META-INF/neoforge.mods.toml', '*.mixins.json']) {

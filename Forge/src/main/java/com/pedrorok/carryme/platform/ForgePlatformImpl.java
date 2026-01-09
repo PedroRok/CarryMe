@@ -1,6 +1,7 @@
 package com.pedrorok.carryme.platform;
 
 import com.pedrorok.carryme.CarryMeLogic;
+import com.pedrorok.carryme.ModRegistry;
 import com.pedrorok.carryme.commands.CarryMeCommand;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
@@ -22,12 +23,9 @@ public class ForgePlatformImpl implements CarryMePlatform {
 
     private static final String WANNA_BE_CARRIED_KEY = CarryMeLogic.MOD_ID + ":wantsToBeCarried";
 
-    public static final GameRule<Boolean> ALLOW_CARRY_CHOICE =
-            GameRules.registerBoolean("allow_carry_choice", GameRuleCategory.PLAYER, true);
-
     @Override
     public GameRule<Boolean> getAllowCarryChoiceRule() {
-        return ALLOW_CARRY_CHOICE;
+        return ModRegistry.ALLOW_CARRY_CHOICE.get();
     }
 
     @Override
