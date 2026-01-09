@@ -2,9 +2,14 @@ package com.pedrorok.carryme;
 
 import com.pedrorok.carryme.platform.CarryMePlatform;
 import com.pedrorok.carryme.platform.NeoForgePlatformImpl;
+import net.minecraft.world.level.gamerules.GameRule;
+import net.minecraft.world.level.gamerules.GameRuleCategory;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.registries.NewRegistryEvent;
 
 /**
  * NeoForge entry point for Carry Me mod

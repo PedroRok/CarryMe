@@ -16,10 +16,10 @@ import static com.pedrorok.carryme.CarryMeLogic.MOD_ID;
 public class CarryOnEvents {
 
     @SubscribeEvent
-    public static void onCarryEntity(EntityPickupEvent event) {
-        if (!(event.target() instanceof Player player)) return;
-        if (CarryMePlatform.getInstance().wantsToBeCarried(player)) return;
-        event
+    public static boolean onCarryEntity(EntityPickupEvent event) {
+        if (!(event.target() instanceof Player player)) return true;
+        if (CarryMePlatform.getInstance().wantsToBeCarried(player)) return true;
+        return false;
     }
 }
 

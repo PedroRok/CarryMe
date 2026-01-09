@@ -4,8 +4,6 @@ import com.pedrorok.carryme.events.ClientEvents;
 import net.fabricmc.api.ClientModInitializer;
 
 /**
- * Fabric client entry point for Carry Me mod
- *
  * @author Rok, Pedro Lucas nmm. 06/01/2026
  * @project carry-me
  */

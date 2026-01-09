@@ -2,13 +2,12 @@ package com.pedrorok.carryme.platform;
 
 import com.pedrorok.carryme.CarryMeLogic;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
-import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
-import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
-import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
+import net.fabricmc.fabric.api.gamerule.v1.GameRuleBuilder;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.gamerules.GameRule;
+import net.minecraft.world.level.gamerules.GameRuleCategory;
+import net.minecraft.world.level.gamerules.GameRules;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,11 +23,11 @@ public class FabricPlatformImpl implements CarryMePlatform {
 
     private static final Map<UUID, Boolean> carryPreferences = new HashMap<>();
 
-    public static final GameRules.Key<GameRules.BooleanValue> ALLOW_CARRY_CHOICE =
-            GameRuleRegistry.register("allowCarryChoice", GameRules.Category.PLAYER, GameRuleFactory.createBooleanRule(true));
+    public static final GameRule<Boolean> ALLOW_CARRY_CHOICE = GameRuleBuilder.forBoolean(true)
+            .category(GameRuleCategory.PLAYER)
+            .buildAndRegister(Identifier.fromNamespaceAndPath(CarryMeLogic.MOD_ID, "allow_carry_choice"));
 
     public FabricPlatformImpl() {
-        // Register player copy event to preserve preferences across respawns
         ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> {
             UUID playerId = newPlayer.getUUID();
             if (carryPreferences.containsKey(oldPlayer.getUUID())) {
@@ -38,13 +37,13 @@ public class FabricPlatformImpl implements CarryMePlatform {
     }
 
     @Override
-    public GameRules.Key<GameRules.BooleanValue> getAllowCarryChoiceRule() {
+    public GameRule<Boolean> getAllowCarryChoiceRule() {
         return ALLOW_CARRY_CHOICE;
     }
 
     @Override
     public void setWantsToBeCarried(Player player, boolean wantsToBeCarried, boolean isSelfChange) {
-        if (!CarryMeLogic.canChangeCarryPreference(player,isSelfChange, player.level().getServer().getGameRules().getBoolean(ALLOW_CARRY_CHOICE))) {
+        if (!CarryMeLogic.canChangeCarryPreference(player, isSelfChange, player.level().getServer().getWorldData().getGameRules().get(ALLOW_CARRY_CHOICE))) {
             return;
         }
 

@@ -10,15 +10,13 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.TeamArgument;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.server.permissions.Permission;import net.minecraft.server.permissions.Permissions;import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.scores.PlayerTeam;
 
 import java.util.Collection;
 
 /**
- * Common command logic for both Fabric and NeoForge
- *
  * @author Rok, Pedro Lucas nmm. 06/01/2026
  * @project carry-me
  */
@@ -30,12 +28,12 @@ public class CarryMeCommand {
                 .then(Commands.argument("enabled", BoolArgumentType.bool())
                         .executes(CarryMeCommand::setSelf))
                 .then(Commands.argument("target", EntityArgument.players())
-                        .requires(source -> source.hasPermission(2))
+                        .requires(source -> source.isPlayer() && source.getPlayer().permissions().hasPermission(Permissions.COMMANDS_MODERATOR))
                         .executes(CarryMeCommand::toggleTargets)
                         .then(Commands.argument("enabled", BoolArgumentType.bool())
                                 .executes(CarryMeCommand::setTargets)))
                 .then(Commands.argument("team", TeamArgument.team())
-                        .requires(source -> source.hasPermission(2))
+                        .requires(source -> source.isPlayer() && source.getPlayer().permissions().hasPermission(Permissions.COMMANDS_MODERATOR))
                         .executes(CarryMeCommand::toggleTeam)
                         .then(Commands.argument("enabled", BoolArgumentType.bool())
                                 .executes(CarryMeCommand::setTeam)))

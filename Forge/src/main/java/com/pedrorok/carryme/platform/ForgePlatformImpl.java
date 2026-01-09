@@ -8,6 +8,7 @@ import net.minecraft.world.level.gamerules.GameRule;
 import net.minecraft.world.level.gamerules.GameRuleCategory;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 /**
@@ -22,7 +23,7 @@ public class ForgePlatformImpl implements CarryMePlatform {
     private static final String WANNA_BE_CARRIED_KEY = CarryMeLogic.MOD_ID + ":wantsToBeCarried";
 
     public static final GameRule<Boolean> ALLOW_CARRY_CHOICE =
-            GameRules.registerBoolean("allowCarryChoice", GameRuleCategory.PLAYER, true);
+            GameRules.registerBoolean("allow_carry_choice", GameRuleCategory.PLAYER, true);
 
     @Override
     public GameRule<Boolean> getAllowCarryChoiceRule() {

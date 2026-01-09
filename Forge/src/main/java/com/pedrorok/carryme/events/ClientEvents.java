@@ -6,7 +6,7 @@ import com.pedrorok.carryme.network.packets.ToggleCarryModePacket;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static com.pedrorok.carryme.CarryMeLogic.MOD_ID;
@@ -26,11 +26,9 @@ public class ClientEvents {
     @Mod.EventBusSubscriber(modid = MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
     public static class GameEvents {
         @SubscribeEvent
-        public static void onClientTick(TickEvent.ClientTickEvent event) {
-            if (event.phase == TickEvent.Phase.END) {
-                while (KeyBindings.TOGGLE_CARRY_MODE.consumeClick()) {
-                    NetworkHandler.sendToServer(new ToggleCarryModePacket());
-                }
+        public static void onClientTick(TickEvent.LevelTickEvent.Post event) {
+            while (KeyBindings.TOGGLE_CARRY_MODE.consumeClick()) {
+                NetworkHandler.sendToServer(new ToggleCarryModePacket());
             }
         }
     }

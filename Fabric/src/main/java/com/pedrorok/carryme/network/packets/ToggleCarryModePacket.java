@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import static com.pedrorok.carryme.CarryMeLogic.MOD_ID;
@@ -17,7 +17,7 @@ import static com.pedrorok.carryme.CarryMeLogic.MOD_ID;
 public record ToggleCarryModePacket() implements CustomPacketPayload {
 
     public static final CustomPacketPayload.Type<ToggleCarryModePacket> ID =
-            new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(MOD_ID, "toggle_carry_mode"));
+            new CustomPacketPayload.Type<>(Identifier.fromNamespaceAndPath(MOD_ID, "toggle_carry_mode"));
 
     public static final StreamCodec<FriendlyByteBuf, ToggleCarryModePacket> CODEC =
             StreamCodec.unit(new ToggleCarryModePacket());
@@ -29,7 +29,7 @@ public record ToggleCarryModePacket() implements CustomPacketPayload {
 
     public static void registerReceiver() {
         ServerPlayNetworking.registerGlobalReceiver(ID, (packet, context) -> {
-            context.player().server.execute(() -> {
+            context.player().level().getServer().execute(() -> {
                 boolean current = CarryMePlatform.getInstance().wantsToBeCarried(context.player());
                 CarryMePlatform.getInstance().setWantsToBeCarried(context.player(), !current, true);
             });

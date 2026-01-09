@@ -1,6 +1,7 @@
 package com.pedrorok.carryme.platform;
 
 import com.pedrorok.carryme.CarryMeLogic;
+import com.pedrorok.carryme.CarrymeNeoForge;
 import com.pedrorok.carryme.commands.CarryMeCommand;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
@@ -22,8 +23,12 @@ public class NeoForgePlatformImpl implements CarryMePlatform {
 
     private static final String WANNA_BE_CARRIED_KEY = CarryMeLogic.MOD_ID + ":wantsToBeCarried";
 
-    public static final GameRule<Boolean> ALLOW_CARRY_CHOICE =
-            GameRules.registerBoolean("allowCarryChoice", GameRuleCategory.PLAYER, true);
+
+    public static final GameRule<Boolean> ALLOW_CARRY_CHOICE = GameRules.registerBoolean(
+            "allow_carry_choice",
+            GameRuleCategory.PLAYER,
+            true
+    );
 
     @Override
     public GameRule<Boolean> getAllowCarryChoiceRule() {
@@ -32,7 +37,7 @@ public class NeoForgePlatformImpl implements CarryMePlatform {
 
     @Override
     public void setWantsToBeCarried(Player player, boolean wantsToBeCarried, boolean isSelfChange) {
-        if (!CarryMeLogic.canChangeCarryPreference(player, isSelfChange, player.level().getServer().getWorldData().getGameRules().get(ALLOW_CARRY_CHOICE))) {
+        if (!CarryMeLogic.canChangeCarryPreference(player, isSelfChange, player.level().getServer().getWorldData().getGameRules().get(getAllowCarryChoiceRule()))) {
             return;
         }
 

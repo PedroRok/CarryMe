@@ -1,6 +1,7 @@
 package com.pedrorok.carryme;
 
 import net.minecraft.client.KeyMapping;
+import net.minecraft.resources.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 /**
@@ -8,7 +9,7 @@ import org.lwjgl.glfw.GLFW;
  * @project carry-me
  */
 public class KeyBindings {
-    public static final String CATEGORY = "key.categories.carryme";
+    public static final KeyMapping.Category CATEGORY = KeyMapping.Category.register(Identifier.fromNamespaceAndPath(CarryMeLogic.MOD_ID, "key.carry.category"));
 
     public static final KeyMapping TOGGLE_CARRY_MODE = new KeyMapping(
             "key.carryme.toggle",
