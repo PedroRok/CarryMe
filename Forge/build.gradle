@@ -139,7 +139,7 @@ tasks.named('processResources', ProcessResources).configure {
             mod_version               : mod_version,
             mod_authors               : mod_authors,
             mod_description           : mod_description,
-            carry_on_version          : carry_on_version
+            carry_on_version          : carry_on_min_version
     ]
     inputs.properties replaceProperties
 
