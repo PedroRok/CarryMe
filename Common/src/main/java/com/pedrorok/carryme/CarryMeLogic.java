@@ -3,7 +3,7 @@ package com.pedrorok.carryme;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.permissions.Permissions;
-import net.minecraft.sounds.SoundEvents;import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -22,7 +22,7 @@ public class CarryMeLogic {
         if (enabled == current) return;
         if (enabled) {
             player.displayClientMessage(Component.translatable("carryme.message.carry_enabled").withColor(0x54fc54), true);
-            player.playSound(SoundEvents.VILLAGER_YES,0.5f, 1.5f);
+            player.playSound(SoundEvents.VILLAGER_YES, 0.5f, 1.5f);
             return;
         }
         player.displayClientMessage(Component.translatable("carryme.message.carry_disabled").withColor(0xfcfc54), true);
