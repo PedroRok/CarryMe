@@ -139,3 +139,7 @@ publishing {
         }
     }
 }
+
+javadoc {
+    options.addStringOption('Xdoclint:-reference', '-quiet')
+}

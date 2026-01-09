@@ -3,10 +3,6 @@ plugins {
     id 'fabric-loom'
 }
 
-base {
-    archivesName = "${mod_id}-fabric-${minecraft_version}"
-}
-
 loom {
     splitEnvironmentSourceSets()
 
