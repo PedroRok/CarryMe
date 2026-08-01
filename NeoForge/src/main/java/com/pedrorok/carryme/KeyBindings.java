@@ -12,7 +12,7 @@ import net.minecraft.resources.Identifier;
  */
 public class KeyBindings {
 
-    public static final KeyMapping.Category CATEGORY = KeyMapping.Category.register(Identifier.fromNamespaceAndPath(CarryMeLogic.MOD_ID, "key.carry.category"));
+    public static final KeyMapping.Category CATEGORY = KeyMapping.Category.register(Identifier.fromNamespaceAndPath(CarryMeLogic.MOD_ID, "main"));
 
     public static final KeyMapping TOGGLE_CARRY_MODE = new KeyMapping(
             "key.carryme.toggle",

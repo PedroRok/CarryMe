@@ -1,6 +1,7 @@
 plugins {
     id 'loader'
-    id 'fabric-loom'
+    // Minecraft 26.1+ ships unobfuscated; this plugin id skips all remapping.
+    id 'net.fabricmc.fabric-loom'
 }
 
 loom {
@@ -39,10 +40,9 @@ loom {
 
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
-    mappings loom.officialMojangMappings()
-    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
+    implementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
 
     // Carry On dependency
-    modApi("tschipp.carryon:carryon-fabric-${minecraft_version}:${carry_on_version}")
+    api("tschipp.carryon:carryon-fabric-${minecraft_version}:${carry_on_version}")
 }

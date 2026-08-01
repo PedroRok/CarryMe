@@ -21,7 +21,7 @@ public interface CarryMePlatform {
     GameRule<Boolean> getAllowCarryChoiceRule();
 
     default void setWantsToBeCarried(Player player, boolean wantsToBeCarried, boolean isSelfChange) {
-        if (!CarryMeLogic.canChangeCarryPreference(player, isSelfChange, player.level().getServer().getWorldData().getGameRules().get(getAllowCarryChoiceRule()))) {
+        if (!CarryMeLogic.canChangeCarryPreference(player, isSelfChange, player.level().getServer().getGameRules().get(getAllowCarryChoiceRule()))) {
             return;
         }
 

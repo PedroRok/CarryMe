@@ -21,17 +21,17 @@ public class CarryMeLogic {
     public static void sendStatusMessage(Player player, boolean enabled, boolean current) {
         if (enabled == current) return;
         if (enabled) {
-            player.displayClientMessage(Component.translatable("carryme.message.carry_enabled").withColor(0x54fc54), true);
+            player.sendOverlayMessage(Component.translatable("carryme.message.carry_enabled").withColor(0x54fc54));
             player.playSound(SoundEvents.VILLAGER_YES, 0.5f, 1.5f);
             return;
         }
-        player.displayClientMessage(Component.translatable("carryme.message.carry_disabled").withColor(0xfcfc54), true);
+        player.sendOverlayMessage(Component.translatable("carryme.message.carry_disabled").withColor(0xfcfc54));
         player.playSound(SoundEvents.VILLAGER_NO, 0.5f, 1.5f);
     }
 
     public static boolean canChangeCarryPreference(Player player, boolean isSelfChange, boolean canChoose) {
         if (!canChoose && isSelfChange && !(player.permissions().hasPermission(Permissions.COMMANDS_MODERATOR))) {
-            player.displayClientMessage(Component.translatable("carryme.message.cant_change_carry_mode").withColor(0xfc5454), false);
+            player.sendSystemMessage(Component.translatable("carryme.message.cant_change_carry_mode").withColor(0xfc5454));
             player.playSound(SoundEvents.VILLAGER_NO, 0.5f, 1.5f);
             return false;
         }

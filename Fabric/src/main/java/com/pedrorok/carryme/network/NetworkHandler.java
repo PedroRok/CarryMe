@@ -10,7 +10,7 @@ import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 public class NetworkHandler {
 
     public static void registerPackets() {
-        PayloadTypeRegistry.playC2S().register(ToggleCarryModePacket.ID, ToggleCarryModePacket.CODEC);
+        PayloadTypeRegistry.serverboundPlay().register(ToggleCarryModePacket.ID, ToggleCarryModePacket.CODEC);
         ToggleCarryModePacket.registerReceiver();
     }
 }
