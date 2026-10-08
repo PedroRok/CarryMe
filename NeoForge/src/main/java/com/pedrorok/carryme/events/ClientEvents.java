@@ -2,14 +2,12 @@ package com.pedrorok.carryme.events;
 
 import com.pedrorok.carryme.KeyBindings;
 import com.pedrorok.carryme.network.packets.ToggleCarryModePacket;
-import net.minecraft.client.resources.server.ServerPackManager;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
-import net.neoforged.neoforge.network.PacketDistributor;
 
 import static com.pedrorok.carryme.CarryMeLogic.MOD_ID;
 

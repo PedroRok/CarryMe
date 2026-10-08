@@ -24,7 +24,7 @@ public class ClientEvents {
     }
 
     @SubscribeEvent
-    public static void onClientTick(TickEvent.LevelTickEvent.Post event) {
+    public static void onClientTick(TickEvent.ClientTickEvent.Post event) {
         while (KeyBindings.TOGGLE_CARRY_MODE.consumeClick()) {
             NetworkHandler.sendToServer(new ToggleCarryModePacket());
         }

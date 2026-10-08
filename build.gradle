@@ -1,5 +1,66 @@
+import me.modmuss50.mpp.ReleaseType
+
 plugins {
     id 'java'
     id 'net.fabricmc.fabric-loom' version '1.17-SNAPSHOT' apply(false)
     id 'net.neoforged.moddev' version '2.0.143' apply(false)
+    id 'me.modmuss50.mod-publish-plugin' version '2.2.1'
+}
+
+evaluationDependsOnChildren()
+
+publishMods {
+    version = mod_version
+    changelog = providers.fileContents(layout.projectDirectory.file('CHANGELOG.md')).asText
+    type = ReleaseType.valueOf(providers.gradleProperty('releaseType').getOrElse('STABLE').toUpperCase())
+    dryRun = providers.gradleProperty('dryRun').isPresent()
+
+    def loaders = [
+            fabric  : [project: ':Fabric', label: 'Fabric'],
+            forge   : [project: ':Forge', label: 'Forge'],
+            neoforge: [project: ':NeoForge', label: 'NeoForge'],
+    ]
+
+    def cfOptions = curseforgeOptions {
+        accessToken = providers.environmentVariable('CURSEFORGE_TOKEN')
+        projectId = '1421860'
+        projectSlug = 'carry-me'
+        minecraftVersions.add(minecraft_version)
+        client = true
+        server = true
+        requires('carry-on')
+    }
+
+    def mrOptions = modrinthOptions {
+        accessToken = providers.environmentVariable('MODRINTH_TOKEN')
+        projectId = 'TqKRgEs9'
+        minecraftVersions.add(minecraft_version)
+        environment = CLIENT_AND_SERVER
+        requires('carry-on')
+    }
+
+    loaders.each { loader, info ->
+        def name = "${mod_name} ${mod_version} - ${info.label} ${minecraft_version}"
+        def jar = project(info.project).tasks.named('jar', Jar)
+
+        curseforge("curseforge${info.label}") {
+            from cfOptions
+            file = jar.flatMap { it.archiveFile }
+            displayName = name
+            modLoaders.add(loader)
+            if (loader == 'fabric') {
+                requires('fabric-api')
+            }
+        }
+
+        modrinth("modrinth${info.label}") {
+            from mrOptions
+            file = jar.flatMap { it.archiveFile }
+            displayName = name
+            modLoaders.add(loader)
+            if (loader == 'fabric') {
+                requires('fabric-api')
+            }
+        }
+    }
 }

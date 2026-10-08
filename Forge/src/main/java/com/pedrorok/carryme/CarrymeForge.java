@@ -2,8 +2,6 @@ package com.pedrorok.carryme;
 
 import com.pedrorok.carryme.platform.CarryMePlatform;
 import com.pedrorok.carryme.platform.ForgePlatformImpl;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 

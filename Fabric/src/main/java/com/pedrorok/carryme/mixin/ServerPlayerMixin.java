@@ -1,8 +1,6 @@
 package com.pedrorok.carryme.mixin;
 
 import com.pedrorok.carryme.accessor.ICarryPlayer;
-import com.pedrorok.carryme.platform.CarryMePlatform;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -20,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ServerPlayerMixin implements ICarryPlayer {
 
     @Unique
-    private boolean carry_me$canBeCarried = false;
+    private boolean carry_me$canBeCarried = true;
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
     private void onReadAdditionalSaveData(ValueInput valueInput, CallbackInfo ci) {

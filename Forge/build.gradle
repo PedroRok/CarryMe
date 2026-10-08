@@ -17,6 +17,10 @@ minecraft {
 
             systemProperty 'eventbus.api.strictRuntimeChecks', 'true'
             systemProperty 'forge.enabledGameTestNamespaces', mod_id
+
+            environment 'MOD_CLASSES', (sourceSets.main.output.classesDirs.files + [sourceSets.main.output.resourcesDir])
+                    .collect { "${mod_id}%%${it.absolutePath}" }
+                    .join(File.pathSeparator)
         }
 
         register('client')
@@ -49,6 +53,7 @@ sourceSets.main.resources.srcDir 'src/generated/resources'
 dependencies {
     implementation minecraft.dependency("net.minecraftforge:forge:${minecraft_version}-${forge_version}")
     annotationProcessor "net.minecraftforge:eventbus-validator:${eventbus_version}"
+    runtimeOnly "net.minecraftforge:bootstrap-dev:${bootstrap_version}"
 
     // Carry On dependency - no longer needs deobfuscation on unobfuscated Minecraft
     implementation "tschipp.carryon:carryon-forge-${minecraft_version}:${carry_on_version}"
