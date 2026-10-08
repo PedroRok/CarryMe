@@ -2,7 +2,7 @@ package com.pedrorok.carryme;
 
 import net.minecraft.client.KeyMapping;
 import net.minecraft.resources.Identifier;
-import org.lwjgl.glfw.GLFW;
+import com.mojang.blaze3d.platform.InputConstants;
 
 /**
  * Client-side key bindings for Forge
@@ -16,7 +16,7 @@ public class KeyBindings {
 
     public static final KeyMapping TOGGLE_CARRY_MODE = new KeyMapping(
             "key.carryme.toggle",
-            GLFW.GLFW_KEY_UNKNOWN,
+            InputConstants.UNKNOWN.getValue(),
             CATEGORY
     );
 }
